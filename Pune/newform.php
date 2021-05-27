@@ -1,6 +1,6 @@
 <?php
 
-
+//Check github
 
 // The below code is  after the user presses the submit button and PHP VALIDATION  starts
 
