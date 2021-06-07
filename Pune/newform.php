@@ -1,6 +1,6 @@
 <?php
 
-//Check github
+include_once "cofig.php";
 
 // The below code is  after the user presses the submit button and PHP VALIDATION  starts
 
@@ -87,17 +87,21 @@ if(isset($_POST['sub']))
   }                                                                       // If there is no validation error  the else parts start where we first connect the database. 
   else{
 
-      $con=mysqli_connect("localhost","root","","pixel6");
+      // $con=mysqli_connect("localhost","root","","pixel6");
       if($con)
       {
 
                                                                           // Storing all data  into some variable  
-
-
+        $email1=$_POST['email'];
+        $q=mysqli_query($con,"SELECT * from userprofile where Email='$email1' ");
+        if(mysqli_num_rows($q)>0)
+        {
+          exit("<h1>This Email id already exists. Try different !!</h1><a href='newform.php'>Submit Again</a>");
+        }
         $firstname1=$_POST['fname'];          
         $lastname1=$_POST['lname'];
         $gender1=$_POST['gen'];
-        $email1=$_POST['email'];
+        
         $phonenumber1=$_POST['phnumber'];
         $state1=$_POST['ss'];
         $city1=$_POST['city'];
@@ -129,7 +133,7 @@ if(isset($_POST['sub']))
            
         
     
-                echo "<script>alert('Data Uploaded Successfully');</script>";                   
+                echo "<script>alert('Data Uploaded Successfully');window.location='profile.php?name=".$firstname1."-".$lastname1."';</script>";                   
         
         }
         }
@@ -160,8 +164,12 @@ if(isset($_POST['sub']))
   <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/style.css">
+    <script type="text/javascript" src="Javascript/validation.js" ></script>
     <title>Registration</title>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <style type="text/css">
+      
+     </style>
    </head>
 <body>
 
@@ -169,7 +177,7 @@ if(isset($_POST['sub']))
 
     <div class="title logoform"><h5>Profile Submission</h5></div>
     <div class="content">
-      <form  method="post" enctype="multipart/form-data" autocomplete="off">
+      <form  method="post" enctype="multipart/form-data" name="f1" autocomplete="off" onsubmit="return validation()">
         <div class="user-details">
           <div class="logof">
             <h2>Personal</h2>
@@ -177,14 +185,17 @@ if(isset($_POST['sub']))
           <div class="input-box">
             <span class="details">First Name</span>
              <span class="error">* <?php  if(isset($_POST['sub'])){echo $nameErr;}?></span>
-            <input type="text" name="fname" placeholder="Enter your first name" >
+              <span id="nerror"></span>
+
+            <input type="text" name="fname" placeholder="Enter your first name" id="ffname">
             
           
           </div>
           <div class="input-box">
             <span class="details">Last Name</span>
             <span class="error"> <?php  if(isset($_POST['sub'])){echo $namesErr;}?></span>
-            <input type="text" name="lname" placeholder="Enter your last name" >
+             <span id="llnerror" ></span>
+            <input type="text" name="lname" placeholder="Enter your last name" id="lname">
               
           </div>
 
@@ -192,10 +203,11 @@ if(isset($_POST['sub']))
           <div class="gender-details">
           <span class="gender-title ">Gender:</span>
           <span class="error">* <?php  if(isset($_POST['sub'])){echo $gendErr;}?></span>
+             <span id="gerror"></span>
           <br>
-          <input type="radio" name="gen" value="Male" ><span style="color: white;">Male</span>
-            <input type="radio" name="gen" value="Female"><span  style="color: white;">Female</span>
-              <input type="radio" name="genr"  value="Other" ><span style="color: white;">Other</span>
+          <input type="radio" name="gen" value="Male" id="male1"><span class="o">Male</span>
+            <input type="radio" name="gen" value="Female" id="female1"><span class="o" >Female</span>
+              <input type="radio" name="gen"  value="Other" id="other1"><span class="o">Other</span>
               
         
           
@@ -205,16 +217,18 @@ if(isset($_POST['sub']))
           <div class="input-box">
             <span class="details">Email</span>
             <span class="error">* <?php  if(isset($_POST['sub'])){echo $EmailErr;}?></span>
-            <input type="text" name="email" placeholder="Enter your email" >
+               <span id="emerror"></span>
+            <input type="text" name="email" placeholder="Enter your email" id="eemail">
           </div>
           <div class="input-box">
             <span class="details">Phone Number</span>
-            <span class="error"> <?php  if(isset($_POST['sub'])){echo $PhoneErr;}?></span></td>
-            <input type="text"   name="phnumber" placeholder="Enter your Phonenumber" >
+            <span class="error"> <?php  if(isset($_POST['sub'])){echo $PhoneErr;}?></span>
+              <span id="errorofphone" ></span>
+            <input type="text"   name="phnumber" placeholder="Enter your Phonenumber" id="ppnumber">
           </div>
         <div class="input-box">
             <span class="details">Select State</span>
-           <select style="margin-top: 30px; width:200px; height: 30px;" name="ss">
+           <select name="ss" id="sstate">
                   <option value="">Select State</option>
                   <option>Andhra Pradesh</option>
                   <option>Arunachal Pradesh</option>
@@ -245,18 +259,19 @@ if(isset($_POST['sub']))
                   <option>Uttar Pradesh</option>
                   <option>Uttarakhand</option>
                   <option>West Bengal</option>
-                  
                     </select>
           </div>
            <div class="input-box">
             <span class="details">City</span>
            <span class="error">* <?php  if(isset($_POST['sub'])){echo $CityErr;}?></span>
-            <input type="text" placeholder=" Enter Your City"  name="city">
+            <span id="cerror" ></span>
+            <input type="text" placeholder=" Enter Your City"  name="city" id="ccity">
           </div>
            <div class="input-box">
             <span class="details">Photo</span>
-           <input type="file" name="picsub"  id="upload_file" >
+           <input type="file" name="picsub"  id="uploadfile" >
              <span class="error"> <?php  if(isset($_POST['sub'])){echo $imgErr;}?></span>
+
           </div>
           <div class="logof" style="margin-top: 20px;">
             <h2>Education</h2>
@@ -264,7 +279,8 @@ if(isset($_POST['sub']))
             <div class="input-box">
             <span class="details">Graduation</span>
             <span class="error">* <?php  if(isset($_POST['sub'])){echo $GradErr;}?></span>
-            <select  name="grad" style="margin-top: 30px; width:200px; height: 30px;">
+             <span id="ggraderror" ></span>
+            <select  name="grad" id="ggrad">
                   <option value="">Select Graduation</option>
                   <option>Bachelor of Arts</option>
                   <option>Bachelor of Science</option>
@@ -285,7 +301,8 @@ if(isset($_POST['sub']))
            <div class="input-box">
             <span class="details">Graduation Year</span>
             <span class="error">* <?php  if(isset($_POST['sub'])){echo $GradYearErr;}?></span>
-          <select style="margin-top: 30px; width:200px; height: 30px;" name="grady">
+             <span id="ggradyerror" ></span>
+          <select name="grady" id="ggrady">
                   <option value="">Select Graduation Year</option>
                   <option>2021</option>
                   <option>2020</option>
@@ -297,12 +314,14 @@ if(isset($_POST['sub']))
            <div class="input-box">
             <span class="details">Specialisation</span>
             <span class="error">* <?php  if(isset($_POST['sub'])){echo $SErr;}?></span>
-           <input type="text" placeholder=" Enter Your Specialisation" name="sp"  >
+             <span id="spclerror" ></span>
+           <input type="text" placeholder=" Enter Your Specialisation" name="sp" id="sspecial">
           </div>
             <div class="input-box">
             <span class="details">College/University</span>
             <span class="error">* <?php  if(isset($_POST['sub'])){echo $CErr;}?></span>
-           <input type="text" placeholder=" Enter Your College/University Name" name="cp" >
+             <span id="clgerror" ></span>
+           <input type="text" placeholder=" Enter Your College/University Name" name="cp" id="uvclg">
           </div>
            <div class="logof" style="margin-top: 20px;">
             <h2>Skills</h2>
@@ -310,7 +329,8 @@ if(isset($_POST['sub']))
               <div class="input-box">
             <span class="details">Primary</span>
             <span class="error">* <?php  if(isset($_POST['sub'])){echo $SkErr;}?></span>
-           <input type="text" placeholder=" Enter Your Primary Skills" name="ps">
+                <span id="pmerror" ></span>
+           <input type="text" placeholder=" Enter Your Primary Skills" name="ps" id="pm">
           </div>
              <div class="input-box">
             <span class="details">Secondary</span>
@@ -323,15 +343,16 @@ if(isset($_POST['sub']))
            <div class="logof" style="margin-top: 20px;">
             <h2>Pitch(Why should we consider you?)</h2>
             <span class="error">* <?php  if(isset($_POST['sub'])){echo $PitchErr;}?></span>
+                <span id="perror" ></span>
            </div>
             
            
-           <textarea cols="90" rows="5" style="margin-bottom: 10%;" name="pitch"></textarea>
+           <textarea cols="90" rows="5" style="margin-bottom: 10%;" name="pitch" id="pitchofuser"></textarea>
          
 
 
 
-        <div class="button" style="display: block; margin: auto;">
+        <div class="button">
           <input type="submit" name="sub">
         </div>
 
