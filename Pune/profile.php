@@ -3,22 +3,53 @@
 <?php
 
 
-// $names=$_REQUEST['param1'];
-// $var1=explode("-",$names);
-// $FNAME=$var1[0];
-// $LNAME=$var1[1];
+error_reporting(0);
+include_once "cofig.php";
+$names=$_REQUEST['name'];
+$var1=explode("-",$names);
+$FNAME=$var1[0];
+$LNAME=$var1[1];
+$Em=$var1[2];
 // echo $FNAME;
 // echo $LNAME;
-//something 
- $FNAME=$_GET['name'];
 
-$con=mysqli_connect("localhost","root","","pixel6");
+//  $FNAME=$_GET['name'];
+if(empty($FNAME) || empty($LNAME))
+{
+exit ("<h1>URL Record Not Found. Provide name =  Firstname-Lastname</h1>");
+}
+// $con=mysqli_connect("localhost","root","","pixel6");
 if($con)
 {
-$query="SELECT * FROM userprofile WHERE  FirstName='$FNAME'";
+if(!empty($Em))
+{
+$query="SELECT * FROM userprofile WHERE  FirstName='$FNAME' and  LastName='$LNAME' and Email='$Em'";
 $q=mysqli_query($con,$query);
+}
+else
+{
+  $query="SELECT * FROM userprofile WHERE  FirstName='$FNAME' and  LastName='$LNAME'";
+$q=mysqli_query($con,$query);
+}
+
 if($q)
 {
+  if(mysqli_num_rows($q)<1)
+  {
+    exit("<h1>Record Not Found</h1>");
+  }
+ if (mysqli_num_rows($q)>1)
+ {
+  echo "<table cellpadding='20'>";
+  while ($arr=mysqli_fetch_array($q)) {
+    echo "<tr><td>".$arr['FirstName']."</td><td>".$arr['LastName']."</td><td>".$arr['Email']."</td><td><a href='profile.php?name=".$arr['FirstName']."-".$arr['LastName']."-".$arr['Email']."'>Click Here to Show Profile</a></td>";
+    echo "<tr>";
+  }
+    exit();
+ }
+   else{
+
+
   $arr=mysqli_fetch_array($q);
   $getgender=$arr['Gender'];
   $prefix="";
@@ -41,6 +72,7 @@ if($q)
 
 }
 }
+
 ?>
 
 
@@ -48,10 +80,10 @@ if($q)
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Showing Data</title>
+  <meta charset="UTF-8">
+  <title>Showing Data</title>
 
-	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+  <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
   <style type="text/css">
    .ncontainer{
     background-color: white;
@@ -231,3 +263,9 @@ body,html{
 
 </body>
 </html>
+
+<?php
+
+}
+
+?>
