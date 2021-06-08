@@ -273,7 +273,7 @@ if(isset($_POST['sub']))
              <span class="error"> <?php  if(isset($_POST['sub'])){echo $imgErr;}?></span>
 
           </div>
-          <div class="logof" style="margin-top: 20px;">
+          <div class="logof" >
             <h2>Education</h2>
            </div>
             <div class="input-box">
@@ -323,7 +323,7 @@ if(isset($_POST['sub']))
              <span id="clgerror" ></span>
            <input type="text" placeholder=" Enter Your College/University Name" name="cp" id="uvclg">
           </div>
-           <div class="logof" style="margin-top: 20px;">
+           <div class="logof">
             <h2>Skills</h2>
            </div>
               <div class="input-box">
@@ -340,14 +340,14 @@ if(isset($_POST['sub']))
             <span class="details">Certifications</span>
            <input type="text" placeholder=" Enter Certifications if any " name="ctf">
           </div>
-           <div class="logof" style="margin-top: 20px;">
+           <div class="logof">
             <h2>Pitch(Why should we consider you?)</h2>
             <span class="error">* <?php  if(isset($_POST['sub'])){echo $PitchErr;}?></span>
                 <span id="perror" ></span>
            </div>
             
            
-           <textarea cols="90" rows="5" style="margin-bottom: 10%;" name="pitch" id="pitchofuser"></textarea>
+           <textarea cols="90" rows="5"  name="pitch" id="pitchofuser"></textarea>
          
 
 
