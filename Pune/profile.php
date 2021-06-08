@@ -84,7 +84,7 @@ if($q)
   <title>Showing Data</title>
 
   <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-  <link rel="stylesheet" type="text/css" href="profile.css">
+  <link rel="stylesheet" type="text/css" href="CSS/profile.css">
 </head>
 <body>
 <div class="ncontainer">
