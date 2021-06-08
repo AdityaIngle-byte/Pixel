@@ -170,7 +170,8 @@ padding-left: 10px;
  }
  form .button{
    height: 45px;
-   margin: 35px 0
+   display: block;
+   margin: auto;
  }
  form .button input{
    height: 100%;
@@ -236,5 +237,19 @@ form .user-details .input-box{
   margin-bottom: 50px;
   color: white;
   }
+.o{
+  color: white;
+}
+#nerror,#perror,#pmerror,#spclerror,#clgerror,#ggradyerror,#ggraderror,#cerror,#errorofphone,#emerror,#gerror,#llnerror{
+  color: red;
+}
+.button{
+  display: block;
+  margin: auto;
+}
+#sstate,#ggrad,#ggrady{
 
+  width: 100%;
+  height: 30px;
 
+}
