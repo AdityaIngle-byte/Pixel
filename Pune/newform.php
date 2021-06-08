@@ -38,7 +38,7 @@ if(isset($_POST['sub']))
   }
   elseif(empty($_POST['gen']))                                   
   {
-    $gendErr="Please Select Your Gender";
+    // $gendErr="Please Select Your Gender";
   }
   elseif(empty($_POST['email']))
   {
